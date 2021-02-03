@@ -707,7 +707,7 @@ class XlinxInstallerActivity : AppCompatActivity() {
             "contact" -> FOLDER_URL + "gcontsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "calendar" -> FOLDER_URL + "gcalsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "playstore" -> FOLDER_URL + "playstore_universal_" + determineMinimumAPI(apktype) + ".apk"
-            "xlinx" -> "xlinx.apk"
+            "xlinx" -> FOLDER_URL + "xlinx.apk"
             else ->  ""
         }
     }
