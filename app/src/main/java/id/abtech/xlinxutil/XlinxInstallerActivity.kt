@@ -74,7 +74,15 @@ class XlinxInstallerActivity : AppCompatActivity() {
         private const val PM_CALENDAR = "com.google.android.syncadapters.calendar"
         private const val PM_XLINX = "iig.xlinx.app"
 
-        private const val REQ_INSTALL_APK = 6001
+        private const val REQ_INSTALL_APK = 6000
+        private const val REQ_INSTALL_GSF = 6001
+        private const val REQ_INSTALL_ACM = 6002
+        private const val REQ_INSTALL_GMS = 6003
+        private const val REQ_INSTALL_CONTACT = 6004
+        private const val REQ_INSTALL_CALENDAR = 6005
+        private const val REQ_INSTALL_PLAYSTORE = 6006
+        private const val REQ_INSTALL_XLINX = 6007
+
 
         private const val PACKAGE_INSTALLED_ACTION =
             "id.abtech.xlinxutil.SESSION_API_PACKAGE_INSTALLED"
@@ -353,26 +361,21 @@ class XlinxInstallerActivity : AppCompatActivity() {
                             text = "Download Completed : Google Services Framework"
                         }
                         isGSFdownloaded = true
+                        installPackage("gsf", REQ_INSTALL_GSF)
                     }
                     request2xACM.id == download.id -> {
                         descACM.apply {
                             text = "Download Completed : Google Account Manager"
                         }
                         isACMdownloaded = true
-//                        statusGlobal.apply {
-//                            text = download.file
-//                        }
-//                        installPackageSession("acm")
+                        installPackage("acm", REQ_INSTALL_ACM)
                     }
                     request3xGMS.id == download.id -> {
                         descGMS.apply {
                             text = "Download Completed : Google Play Services"
                         }
                         isGMSdownloaded = true
-//                        statusGlobal.apply {
-//                            text = download.file
-//                        }
-//                        installPackageSession("gms")
+                        installPackage("gms", REQ_INSTALL_GMS)
                     }
                     request4xGConS.id == download.id -> {
                         descSYNC.apply {
@@ -394,7 +397,7 @@ class XlinxInstallerActivity : AppCompatActivity() {
                         statusGlobal.apply {
                             text = download.file
                         }
-                        installPackage("playstore")
+                        installPackage("playstore", REQ_INSTALL_PLAYSTORE)
                     }
                 }
             }
@@ -625,12 +628,12 @@ class XlinxInstallerActivity : AppCompatActivity() {
 //            checkGoogleServices()
 //            checkXlinx()
             winnieThePoo()
-            downloadAPK(request1xGSF)
-            downloadAPK(request2xACM)
-            downloadAPK(request3xGMS)
-            downloadAPK(request4xGConS)
-            downloadAPK(request5xGCalS)
-            downloadAPK(request6xPlayStore)
+//            downloadAPK(request1xGSF)
+//            downloadAPK(request2xACM)
+//            downloadAPK(request3xGMS)
+//            downloadAPK(request4xGConS)
+//            downloadAPK(request5xGCalS)
+//            downloadAPK(request6xPlayStore)
         }
     }
 
@@ -644,10 +647,10 @@ class XlinxInstallerActivity : AppCompatActivity() {
         // emulation is available.
         for (androidArch in Build.SUPPORTED_ABIS) {
             when (androidArch) {
-                "arm64-v8a" -> return "arm64"
+                "arm64-v8a" -> return "arm"
                 "armeabi-v7a" -> return "arm"
                 "x86_64" -> return "x86-64"
-                "x86" -> return "i686"
+                "x86" -> return "x86-64"
             }
         }
         throw RuntimeException(
@@ -703,7 +706,7 @@ class XlinxInstallerActivity : AppCompatActivity() {
         return when (apktype) {
             "gsf" -> FOLDER_URL + "gsf_universal_" + determineMinimumAPI(apktype) + ".apk"
             "acm" -> FOLDER_URL + "acm_universal_" + determineMinimumAPI(apktype) + ".apk"
-            "gms" -> FOLDER_URL + "gms_arm_" + determineMinimumAPI(apktype) + ".apk"
+            "gms" -> FOLDER_URL + "gms_" + determineArchName() + "_" + determineMinimumAPI(apktype) + ".apk"
             "contact" -> FOLDER_URL + "gcontsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "calendar" -> FOLDER_URL + "gcalsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "playstore" -> FOLDER_URL + "playstore_universal_" + determineMinimumAPI(apktype) + ".apk"
@@ -816,28 +819,37 @@ class XlinxInstallerActivity : AppCompatActivity() {
         }
     }
 
-    private fun installPackage(apktype: String) {
-        val intent = Intent(Intent.ACTION_VIEW)
+    private fun installPackage(apktype: String, requestCode: Int) {
+        val intent = Intent(Intent.ACTION_INSTALL_PACKAGE)
         intent.setDataAndType(
             FileProvider.getUriForFile(
                 this, this.applicationContext.packageName + ".provider", createFile(apktype)
             ), "application/vnd.android.package-archive"
         )
-//        intent.putExtra(Intent.EXTRA_RETURN_RESULT, true)
+        intent.putExtra(Intent.EXTRA_RETURN_RESULT, true)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//        startActivityForResult(intent, REQ_INSTALL_APK)
-        startActivity(intent)
+        startActivityForResult(intent, requestCode)
+//        startActivity(intent)
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        when (requestCode) {
-//            REQ_INSTALL_APK -> {
-////                Toast.makeText(this, data.toString(), Toast.LENGTH_LONG).show()
-//            }
-//        }
-//    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val pm: PackageManager = this.packageManager
+
+        when (requestCode) {
+            REQ_INSTALL_GSF -> {
+                if (isPackageInstalled(PM_GSF, pm)) {
+                    downloadAPK(request2xACM)
+                }
+            }
+            REQ_INSTALL_ACM -> {
+                if (isPackageInstalled(PM_ACM, pm)) {
+                    downloadAPK(request3xGMS)
+                }
+            }
+        }
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -952,35 +964,35 @@ class XlinxInstallerActivity : AppCompatActivity() {
         }
     }
 
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        val extras = intent.extras
-        if (PACKAGE_INSTALLED_ACTION.equals(intent.action)) {
-            val status = extras!!.getInt(PackageInstaller.EXTRA_STATUS)
-            val message = extras.getString(PackageInstaller.EXTRA_STATUS_MESSAGE)
-            when (status) {
-                PackageInstaller.STATUS_PENDING_USER_ACTION -> {
-                    // This test app isn't privileged, so the user has to confirm the install.
-                    val confirmIntent = extras[Intent.EXTRA_INTENT] as Intent?
-                    startActivity(confirmIntent)
-                }
-                PackageInstaller.STATUS_SUCCESS -> Toast.makeText(
-                    this,
-                    "Install succeeded!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                PackageInstaller.STATUS_FAILURE, PackageInstaller.STATUS_FAILURE_ABORTED, PackageInstaller.STATUS_FAILURE_BLOCKED, PackageInstaller.STATUS_FAILURE_CONFLICT, PackageInstaller.STATUS_FAILURE_INCOMPATIBLE, PackageInstaller.STATUS_FAILURE_INVALID, PackageInstaller.STATUS_FAILURE_STORAGE -> Toast.makeText(
-                    this,
-                    "Install failed! $status, $message",
-                    Toast.LENGTH_SHORT
-                ).show()
-                else -> Toast.makeText(
-                    this, "Unrecognized status received from installer: $status",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
+//    override fun onNewIntent(intent: Intent) {
+//        super.onNewIntent(intent)
+//        val extras = intent.extras
+//        if (PACKAGE_INSTALLED_ACTION.equals(intent.action)) {
+//            val status = extras!!.getInt(PackageInstaller.EXTRA_STATUS)
+//            val message = extras.getString(PackageInstaller.EXTRA_STATUS_MESSAGE)
+//            when (status) {
+//                PackageInstaller.STATUS_PENDING_USER_ACTION -> {
+//                    // This test app isn't privileged, so the user has to confirm the install.
+//                    val confirmIntent = extras[Intent.EXTRA_INTENT] as Intent?
+//                    startActivity(confirmIntent)
+//                }
+//                PackageInstaller.STATUS_SUCCESS -> Toast.makeText(
+//                    this,
+//                    "Install succeeded!",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                PackageInstaller.STATUS_FAILURE, PackageInstaller.STATUS_FAILURE_ABORTED, PackageInstaller.STATUS_FAILURE_BLOCKED, PackageInstaller.STATUS_FAILURE_CONFLICT, PackageInstaller.STATUS_FAILURE_INCOMPATIBLE, PackageInstaller.STATUS_FAILURE_INVALID, PackageInstaller.STATUS_FAILURE_STORAGE -> Toast.makeText(
+//                    this,
+//                    "Install failed! $status, $message",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                else -> Toast.makeText(
+//                    this, "Unrecognized status received from installer: $status",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        }
+//    }
 
     private fun setupViewModelObserver() {
 //        mainViewModel.updateListAction.observe(this, {
@@ -1005,6 +1017,7 @@ class XlinxInstallerActivity : AppCompatActivity() {
                 } else {
 //                tv_test_state.text = getString(R.string.connection_test_fail)
                 }
+                downloadAPK(request1xGSF)
             } else {
 //                fab.setImageResource(R.drawable.ic_v_idle)
                 statusGlobal.text = getString(R.string.connection_not_connected)
