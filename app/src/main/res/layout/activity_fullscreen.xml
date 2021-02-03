@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/fullscreenBackgroundColor"
+    android:theme="@style/ThemeOverlay.XLinXUtilities.FullscreenContainer"
+    tools:context=".XlinxInstallerActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        >
+
+        <ImageView
+            android:id="@+id/mainLogo"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="36dp"
+            android:transitionName="profile"
+            android:elevation="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_xlinx_onwhite" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/lottie_spinner_2"
+            />
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerV2Ray"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            app:layout_constraintTop_toBottomOf="@id/lottieView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            
+            <ImageView
+                android:id="@+id/imgV2Ray"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white"
+                android:src="@drawable/ic_xlinx_nav_space"/>
+            
+            <TextView
+                android:id="@+id/titleV2Ray"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgV2Ray"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/descV2Ray"
+                android:text="@string/v2ray_title"
+                android:fontFamily="@font/mavenpro_medium"
+                app:fontFamily="@font/mavenpro_medium"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/descV2Ray"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgV2Ray"
+                app:layout_constraintTop_toBottomOf="@id/titleV2Ray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/v2ray_desc"
+                android:maxLines="2"
+                android:fontFamily="@font/mavenpro_regular"
+                app:fontFamily="@font/mavenpro_regular"
+                android:textSize="12sp"
+                android:textColor="@color/white"/>
+
+<!--            <TextView-->
+<!--                android:id="@+id/statusV2Ray"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="12dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:text="@string/app_name"-->
+<!--                android:textAlignment="textEnd"-->
+<!--                android:maxLines="1"-->
+<!--                android:fontFamily="@font/mavenpro_regular"-->
+<!--                app:fontFamily="@font/mavenpro_regular"-->
+<!--                android:textStyle="italic"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textColor="@color/white"/>-->
+            
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerGMS"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            app:layout_constraintTop_toBottomOf="@id/containerV2Ray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/imgGMS"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tint="@color/white"
+                android:src="@drawable/ic_xlinx_nav_space"/>
+
+            <TextView
+                android:id="@+id/titleGMS"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgGMS"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/descGSF"
+                android:text="@string/google_title"
+                android:fontFamily="@font/mavenpro_medium"
+                app:fontFamily="@font/mavenpro_medium"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/descGSF"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgGMS"
+                app:layout_constraintTop_toBottomOf="@id/titleGMS"
+                android:text="@string/google_desc_gsf"
+                android:maxLines="2"
+                android:fontFamily="@font/mavenpro_regular"
+                app:fontFamily="@font/mavenpro_regular"
+                android:textSize="12sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/descACM"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgGMS"
+                app:layout_constraintTop_toBottomOf="@id/descGSF"
+                android:text="@string/google_desc_acm"
+                android:maxLines="2"
+                android:fontFamily="@font/mavenpro_regular"
+                app:fontFamily="@font/mavenpro_regular"
+                android:textSize="12sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/descGMS"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgGMS"
+                app:layout_constraintTop_toBottomOf="@id/descACM"
+                android:text="@string/google_desc_gms"
+                android:maxLines="2"
+                android:fontFamily="@font/mavenpro_regular"
+                app:fontFamily="@font/mavenpro_regular"
+                android:textSize="12sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/descSYNC"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgGMS"
+                app:layout_constraintTop_toBottomOf="@id/descGMS"
+                android:text="@string/google_desc_sync"
+                android:maxLines="2"
+                android:fontFamily="@font/mavenpro_regular"
+                app:fontFamily="@font/mavenpro_regular"
+                android:textSize="12sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/descPlayStore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgGMS"
+                app:layout_constraintTop_toBottomOf="@id/descSYNC"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/google_desc_playstore"
+                android:maxLines="2"
+                android:fontFamily="@font/mavenpro_regular"
+                app:fontFamily="@font/mavenpro_regular"
+                android:textSize="12sp"
+                android:textColor="@color/white"/>
+
+<!--            <TextView-->
+<!--                android:id="@+id/statusGMS"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="12dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:text="@string/app_name"-->
+<!--                android:textAlignment="textEnd"-->
+<!--                android:maxLines="1"-->
+<!--                android:fontFamily="@font/mavenpro_regular"-->
+<!--                app:fontFamily="@font/mavenpro_regular"-->
+<!--                android:textStyle="italic"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textColor="@color/white"/>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerXlinx"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/containerGMS"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/imgXlinx"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tint="@color/white"
+                android:src="@drawable/ic_xlinx_nav_space"/>
+
+            <TextView
+                android:id="@+id/titleXlinx"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgXlinx"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/descXlinx"
+                android:text="@string/xlinx_title"
+                android:fontFamily="@font/mavenpro_medium"
+                app:fontFamily="@font/mavenpro_medium"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/descXlinx"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgXlinx"
+                app:layout_constraintTop_toBottomOf="@id/titleXlinx"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/xlinx_desc"
+                android:maxLines="2"
+                android:fontFamily="@font/mavenpro_regular"
+                app:fontFamily="@font/mavenpro_regular"
+                android:textSize="12sp"
+                android:textColor="@color/white"/>
+
+<!--            <TextView-->
+<!--                android:id="@+id/statusXlinx"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="12dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:text="@string/app_name"-->
+<!--                android:textAlignment="textEnd"-->
+<!--                android:maxLines="1"-->
+<!--                android:fontFamily="@font/mavenpro_regular"-->
+<!--                app:fontFamily="@font/mavenpro_regular"-->
+<!--                android:textStyle="italic"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textColor="@color/white"/>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/statusGlobal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toBottomOf="@id/containerXlinx"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:maxLines="3"
+            android:fontFamily="@font/mavenpro_bold"
+            app:fontFamily="@font/mavenpro_bold"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/startButton"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="58dp"
+            android:layout_marginEnd="58dp"
+            app:layout_constraintTop_toBottomOf="@id/statusGlobal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/app_name"
+            android:fontFamily="@font/mavenpro_bold"
+            app:fontFamily="@font/mavenpro_bold"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="@style/Widget.Theme.XLinXUtilities.ButtonBar.Fullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <Button
+                android:id="@+id/dummy_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dummy_button" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

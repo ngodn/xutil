@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':dpreference'
 rootProject.name = "X-LinX Utilities"
