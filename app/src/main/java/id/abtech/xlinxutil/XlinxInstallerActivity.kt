@@ -278,6 +278,8 @@ class XlinxInstallerActivity : AppCompatActivity() {
         request6xPlayStore = Request(buildURL("playstore"), createFile("playstore").absolutePath)
         request7xXlinx = Request(buildURL("xlinx"), createFile("xlinx").absolutePath)
 
+        val pm: PackageManager = this.packageManager
+
         val fetchConfiguration: FetchConfiguration = FetchConfiguration.Builder(this)
             .setDownloadConcurrentLimit(3)
             .build()
@@ -361,43 +363,64 @@ class XlinxInstallerActivity : AppCompatActivity() {
                             text = "Download Completed : Google Services Framework"
                         }
                         isGSFdownloaded = true
-                        installPackage("gsf", REQ_INSTALL_GSF)
+                        if (!isPackageInstalled(PM_GSF, pm)) {
+                            installPackage("gsf", REQ_INSTALL_GSF)
+                        } else {
+                            downloadAPK(request2xACM)
+                        }
                     }
                     request2xACM.id == download.id -> {
                         descACM.apply {
                             text = "Download Completed : Google Account Manager"
                         }
                         isACMdownloaded = true
-                        installPackage("acm", REQ_INSTALL_ACM)
+                        if (!isPackageInstalled(PM_ACM, pm)) {
+                            installPackage("acm", REQ_INSTALL_ACM)
+                        } else {
+                            downloadAPK(request3xGMS)
+                        }
                     }
                     request3xGMS.id == download.id -> {
                         descGMS.apply {
                             text = "Download Completed : Google Play Services"
                         }
                         isGMSdownloaded = true
-                        installPackage("gms", REQ_INSTALL_GMS)
+                        if (!isPackageInstalled(PM_GMS, pm)) {
+                            installPackage("gms", REQ_INSTALL_GMS)
+                        } else {
+                            downloadAPK(request4xGConS)
+                        }
                     }
                     request4xGConS.id == download.id -> {
                         descSYNC.apply {
                             text = "Download Completed : Sync Dependencies"
                         }
                         isContactdownloaded = true
+                        if (!isPackageInstalled(PM_CONTACT, pm)) {
+                            installPackage("contact", REQ_INSTALL_CONTACT)
+                        } else {
+                            downloadAPK(request5xGCalS)
+                        }
                     }
                     request5xGCalS.id == download.id -> {
                         descSYNC.apply {
                             text = "Download Completed : Sync Dependencies"
                         }
                         isCalendardownloaded = true
+                        if (!isPackageInstalled(PM_CALENDAR, pm)) {
+                            installPackage("calendar", REQ_INSTALL_CALENDAR)
+                        } else {
+                            downloadAPK(request6xPlayStore)
+                        }
                     }
                     request6xPlayStore.id == download.id -> {
                         descPlayStore.apply {
                             text = "Download Completed : Play Store"
                         }
                         isPlaystoredownloaded = true
-                        statusGlobal.apply {
-                            text = download.file
+                        if (!isPackageInstalled(PM_PLAYSTORE, pm)) {
+                            installPackage("playstore", REQ_INSTALL_PLAYSTORE)
                         }
-                        installPackage("playstore", REQ_INSTALL_PLAYSTORE)
                     }
                 }
             }
@@ -627,13 +650,13 @@ class XlinxInstallerActivity : AppCompatActivity() {
         startButton.setOnClickListener {
 //            checkGoogleServices()
 //            checkXlinx()
-            winnieThePoo()
+//            winnieThePoo()
 //            downloadAPK(request1xGSF)
 //            downloadAPK(request2xACM)
 //            downloadAPK(request3xGMS)
 //            downloadAPK(request4xGConS)
 //            downloadAPK(request5xGCalS)
-//            downloadAPK(request6xPlayStore)
+            downloadAPK(request6xPlayStore)
         }
     }
 
@@ -706,7 +729,8 @@ class XlinxInstallerActivity : AppCompatActivity() {
         return when (apktype) {
             "gsf" -> FOLDER_URL + "gsf_universal_" + determineMinimumAPI(apktype) + ".apk"
             "acm" -> FOLDER_URL + "acm_universal_" + determineMinimumAPI(apktype) + ".apk"
-            "gms" -> FOLDER_URL + "gms_" + determineArchName() + "_" + determineMinimumAPI(apktype) + ".apk"
+            "gms" -> FOLDER_URL + "gms_x86-64_minAPI30.apk"
+//            "gms" -> FOLDER_URL + "gms_" + determineArchName() + "_" + determineMinimumAPI(apktype) + ".apk"
             "contact" -> FOLDER_URL + "gcontsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "calendar" -> FOLDER_URL + "gcalsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "playstore" -> FOLDER_URL + "playstore_universal_" + determineMinimumAPI(apktype) + ".apk"
@@ -719,7 +743,8 @@ class XlinxInstallerActivity : AppCompatActivity() {
         return when (apktype) {
             "gsf" -> "gsf_universal_" + determineMinimumAPI(apktype) + ".apk"
             "acm" -> "acm_universal_" + determineMinimumAPI(apktype) + ".apk"
-            "gms" -> "gms_arm_" + determineMinimumAPI(apktype) + ".apk"
+            "gms" -> "gms_x86-64_minAPI30.apk"
+//            "gms" -> "gms_arm_" + determineMinimumAPI(apktype) + ".apk"
             "contact" -> "gcontsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "calendar" -> "gcalsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "playstore" -> "playstore_universal_" + determineMinimumAPI(apktype) + ".apk"
@@ -847,6 +872,25 @@ class XlinxInstallerActivity : AppCompatActivity() {
                 if (isPackageInstalled(PM_ACM, pm)) {
                     downloadAPK(request3xGMS)
                 }
+            }
+            REQ_INSTALL_GMS -> {
+                if (isPackageInstalled(PM_GMS, pm)) {
+                    downloadAPK(request4xGConS)
+                }
+            }
+            REQ_INSTALL_CONTACT -> {
+                if (isPackageInstalled(PM_CONTACT, pm)) {
+                    downloadAPK(request5xGCalS)
+                }
+            }
+            REQ_INSTALL_CALENDAR -> {
+                if (isPackageInstalled(PM_CALENDAR, pm)) {
+                    downloadAPK(request6xPlayStore)
+                }
+            }
+            REQ_INSTALL_PLAYSTORE -> {
+//                if (isPackageInstalled(PM_PLAYSTORE, pm)) {
+//                }
             }
         }
     }
