@@ -29,6 +29,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.judemanutd.autostarter.AutoStartPermissionHelper
 import com.tonyodev.fetch2.*
 import com.tonyodev.fetch2core.DownloadBlock
 import id.abtech.xlinxutil.xray.extension.defaultDPreference
@@ -258,6 +259,9 @@ class XlinxInstallerActivity : AppCompatActivity() {
         descXlinx = findViewById(R.id.descXlinx)
         startButton = findViewById(R.id.startButton)
 
+//        if (AutoStartPermissionHelper.getInstance().isAutoStartPermissionAvailable(this)) {
+//            AutoStartPermissionHelper.getInstance().getAutoStartPermission(this)
+//        }
 
         // Set up the user interaction to manually show or hide the system UI.
         fullscreenContent = findViewById(R.id.fullscreen_content)
@@ -729,12 +733,10 @@ class XlinxInstallerActivity : AppCompatActivity() {
         return when (apktype) {
             "gsf" -> FOLDER_URL + "gsf_universal_" + determineMinimumAPI(apktype) + ".apk"
             "acm" -> FOLDER_URL + "acm_universal_" + determineMinimumAPI(apktype) + ".apk"
-            "gms" -> FOLDER_URL + "gms_x86-64_minAPI30.apk"
-//            "gms" -> FOLDER_URL + "gms_" + determineArchName() + "_" + determineMinimumAPI(apktype) + ".apk"
+            "gms" -> FOLDER_URL + "gms_" + determineArchName() + "_" + determineMinimumAPI(apktype) + ".apk"
             "contact" -> FOLDER_URL + "gcontsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "calendar" -> FOLDER_URL + "gcalsync_universal_" + determineMinimumAPI(apktype) + ".apk"
-            "playstore" -> FOLDER_URL + "xx_5.apk"
-//            "playstore" -> FOLDER_URL + "playstore_universal_" + determineMinimumAPI(apktype) + ".apk"
+            "playstore" -> FOLDER_URL + "playstore_universal_" + determineMinimumAPI(apktype) + ".apk"
             "xlinx" -> FOLDER_URL + "xlinx.apk"
             else ->  ""
         }
@@ -744,12 +746,11 @@ class XlinxInstallerActivity : AppCompatActivity() {
         return when (apktype) {
             "gsf" -> "gsf_universal_" + determineMinimumAPI(apktype) + ".apk"
             "acm" -> "acm_universal_" + determineMinimumAPI(apktype) + ".apk"
-            "gms" -> "gms_x86-64_minAPI30.apk"
-//            "gms" -> "gms_arm_" + determineMinimumAPI(apktype) + ".apk"
+//            "gms" -> "gms_x86-64_minAPI30.apk"
+            "gms" -> "gms_arm_" + determineMinimumAPI(apktype) + ".apk"
             "contact" -> "gcontsync_universal_" + determineMinimumAPI(apktype) + ".apk"
             "calendar" -> "gcalsync_universal_" + determineMinimumAPI(apktype) + ".apk"
-            "playstore" -> "xx_5.apk"
-//            "playstore" -> "playstore_universal_" + determineMinimumAPI(apktype) + ".apk"
+            "playstore" -> "playstore_universal_" + determineMinimumAPI(apktype) + ".apk"
             "xlinx" -> "xlinx.apk"
             else ->  ""
         }

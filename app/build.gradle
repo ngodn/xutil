@@ -94,6 +94,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.2'
     implementation 'com.tencent:mmkv-static:1.2.6'
     implementation 'pub.devrel:easypermissions:3.0.0'
+    implementation 'com.github.judemanutd:autostarter:1.0.8'
 
 
 
